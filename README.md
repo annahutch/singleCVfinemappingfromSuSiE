@@ -21,7 +21,7 @@ and the array job is ran over how many regions have evidence of a single CV
 
 Output: res_$file/ directory containing .RDS files with the output from single CV fine-mapping with corrcoverage adjustment for the regions with evidence of a single CV from SuSiE
 
-## 03_collateallresults.R
+##03_collateallresults.R
 
 Usage: Rscript 03_collateallresults.R $file
 
