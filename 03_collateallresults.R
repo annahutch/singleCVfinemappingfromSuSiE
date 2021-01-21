@@ -33,6 +33,6 @@ singleCV_regions <- lapply(singleCVfm_shortlist, function(x) x$block[1]) %>% unl
 
 susie_res_only <- susie_res_list[-match(singleCV_regions, all_regions)]
 
-final_fm_res <- list(susie_res_only, singleCVfm_list)
-
+final_fm_res <- list(susie_res_only, singleCVfm_shortlist)
+                           
 saveRDS(final_fm_res, paste0("finalFMres_", file, ".RDS"))
