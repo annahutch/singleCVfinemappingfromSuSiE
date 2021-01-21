@@ -13,10 +13,10 @@ which contains a list of genomic regions with evidence of a single CV from SuSiE
 
 ## 02_singleCVfinemapping.R
 
-Usage: Rscript 02_singleCVfinemapping.R $file $N1 $N0 
+Usage: Rscript 02_singleCVfinemapping.R $file
 within a slurm script as an array job
 
-where $file is the SuSiE output table from Chris, $N1 is the number of cases in the GWAS and $N0 is the number of controls in the GWAS
+where $file is the SuSiE output table from Chris
 and the array job is ran over how many regions have evidence of a single CV 
 
 Output: res_$file/ directory containing .RDS files with the output from single CV fine-mapping with corrcoverage adjustment for the regions with evidence of a single CV from SuSiE
