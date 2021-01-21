@@ -13,6 +13,8 @@ which contains a list of genomic regions with evidence of a single CV from SuSiE
 
 ## 02_singleCVfinemapping.R
 
+(NOTE NEED TO AMEND THIS SCRIPT FOR HOW MANY SUSIE SETS THERE ARE)
+
 Usage: Rscript 02_singleCVfinemapping.R $file
 within a slurm script as an array job
 
