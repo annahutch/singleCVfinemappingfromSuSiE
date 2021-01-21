@@ -28,7 +28,7 @@ res_fm <- res[which(res$finemapped==T), ]
 y <- split(res_fm, res_fm$block)
 
 # find regions with at most one credible set
-one_cs <- which(lapply(y, function(x) all(is.na(x[,c("set_2","set_3","set_4","set_5","set_6","set_7","set_8")]))) %>% unlist())
+one_cs <- which(lapply(y, function(x) all(is.na(x[,c("set_2","set_3","set_4","set_5")]))) %>% unlist())
 
 # exclude regions where there is no credible set
 no_sets <- which(lapply(y[one_cs], function(x) all(is.na(x[,c("set_1")]))) %>% unlist())

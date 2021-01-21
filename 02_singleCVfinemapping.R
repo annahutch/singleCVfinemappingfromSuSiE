@@ -1,10 +1,7 @@
 # script to perform fine-mapping (with corrected coverage adjustment)
 # on the genomic regions with evidence of a single CV
 
-# input: 
-# [1] file name of SuSiE output
-# [2] number of cases in GWAS
-# [3] number of controls in GWAS
+# input: file name of SuSiE output
 
 # submit as an array job with indices
 # from 1 to the number of regions with 
@@ -25,7 +22,7 @@ i <- as.numeric(task_id_string)
 ####################################################################
 ####################################################################
 
-file <- args[1] # file with susie results
+file <- args # file with susie results
 
 y_fm <- readRDS(paste0("singleCVregions_", file, ".RDS"))
 
@@ -35,11 +32,11 @@ load(paste0("../mafld/tmp_mafld_",names(y_fm)[i],".RData"))
 if(length(MAF)!=dim(LD)[1]) print("MAF and LD diff sizes")
 
 # match SNPs
-x_subset <- x[na.omit(match(names(MAF), x$snp)),]
+x_subset <- y_fm[[i]][na.omit(match(names(MAF), y_fm[[i]]$snp)),]
 
 # check 
 if(length(MAF)!=dim(x_subset)[1]) {
-  missing <- which(is.na(match(names(MAF), x$snp)))
+  missing <- which(is.na(match(names(MAF), y_fm[[i]]$snp)))
   # remove this from MAF and LD objects
   MAF <- MAF[-missing]
   LD <- LD[-missing, -missing]
@@ -47,10 +44,6 @@ if(length(MAF)!=dim(x_subset)[1]) {
 }
 
 if(identical(x_subset$snp, names(MAF))==FALSE) print("Wrong order")
-
-N0 = args[3]
-N1 = args[2]
-N = N0 + N1
 
 # calculate PPs
 W = 0.2
@@ -63,12 +56,13 @@ mybhat <- x_subset$beta.imp
 names(mybhat) <- x_subset$snp
 names(pp) <- x_subset$snp
 
+# note that N0 and N1 parameters are not used in the function!!
 out <- tryCatch(
   {
     corrected_cs_bhat(bhat = mybhat,
                       V = x_subset$se.imp^2,
-                      N0 = N0, 
-                      N1 = N1,
+                      N0 = 0, 
+                      N1 = 0,
                       Sigma = LD,
                       lower = 0.5,
                       desired.cov = 0.95,
@@ -87,5 +81,5 @@ x_subset$PP <- pp
 x_subset$corr_credset <- FALSE
 x_subset$corr_credset[match(out$credset, x_subset$snp)] <- TRUE
 
-dir.create(paste0("res_", file))
-saveRDS(list(out, x_subset), paste0("res_", file, "/res_",names(y_fm)[i],".RDS"))
+#dir.create(paste0("res_", file))
+saveRDS(list(out, x_subset), paste0("res/","res_",names(y_fm)[i],".RDS"))
