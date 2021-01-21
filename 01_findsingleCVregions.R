@@ -1,5 +1,7 @@
 # script to extract genomic regions with evidence of a single causal variant from SuSiE output
 
+#(NOTE NEED TO AMEND THIS SCRIPT FOR HOW MANY SUSIE SETS THERE ARE)
+
 # input: 
 # [1] file name of SuSiE output
 
