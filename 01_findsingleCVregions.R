@@ -35,7 +35,7 @@ one_cs <- which(lapply(y, function(x) all(is.na(x[,c("set_2","set_3","set_4","se
 # exclude regions where there is no credible set
 no_sets <- which(lapply(y[one_cs], function(x) all(is.na(x[,c("set_1")]))) %>% unlist())
 
-if(length(no_sets) > 0) one_cs <- one_cs[-no_sets,]
+if(length(no_sets) > 0) one_cs <- one_cs[-no_sets]
 
 saveRDS(y[one_cs], paste0("singleCVregions_", file, ".RDS"))
 
