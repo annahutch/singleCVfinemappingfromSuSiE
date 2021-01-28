@@ -1,17 +1,21 @@
 # singleCVfinemappingfromSuSiE
 Code to perform single CV fine-mapping with corrected coverage adjustment for regions with evidence of a single CV from SuSiE.
 
-## 01_findsingleCVregions.R
+## 01_findregionstomallerfinemap.R
 
-(NOTE NEED TO AMEND THIS SCRIPT FOR HOW MANY SUSIE SETS THERE ARE)
+(NOTE NEED TO AMEND THIS SCRIPT FOR HOW MANY SUSIE SETS THERE ARE (i.e. cols set_1,...,set_3)
 
-Usage: Rscript 01_findsingleCVregions.R $file
+Usage: Rscript 01_findregionstomallerfinemap.R $file
 
 where $file is the SuSiE output table from Chris
 
-Output: finalFMres_$file.RDS
+Output: regions2corrcov_*.RDS
 
-which contains a list of genomic regions with evidence of a single CV from SuSiE
+where * is first 3 characters in $file
+
+This is a list of data.frames of GWAS results for the regions where the Maller fine-mapping approach
+with corrcoverage adjustment will be run (those regions with either (i) evidence of a single CV from SuSiE or
+(ii) significant p-values but missing imputed values so SuSiE could not be run).
 
 ## 02_singleCVfinemapping.R
 
@@ -19,9 +23,9 @@ Usage: Rscript 02_singleCVfinemapping.R $file
 within a slurm script as an array job
 
 where $file is the SuSiE output table from Chris
-and the array job is ran over how many regions have evidence of a single CV 
+and the array job is ran over how many regions to finemap (i.e. the length of the list from 01_findregionstomallerfinemap.R
 
-Output: res_$file/ directory containing .RDS files with the output from single CV fine-mapping with corrcoverage adjustment for the regions with evidence of a single CV from SuSiE
+Output: res_$file/ directory containing .RDS files with the output from single CV fine-mapping with corrcoverage adjustment
 
 ##03_collateallresults.R
 
