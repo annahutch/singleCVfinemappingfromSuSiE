@@ -31,8 +31,12 @@ singleCVfm_shortlist <- sapply(singleCVfm_list, "[[", 2, simplify = F)
 all_regions <- lapply(susie_res_list, function(x) x$block[1]) %>% unlist()
 singleCV_regions <- lapply(singleCVfm_shortlist, function(x) x$block[1]) %>% unlist()
 
-susie_res_only <- susie_res_list[-match(singleCV_regions, all_regions)]
+susie_res_only <- susie_res_list[-na.omit(match(singleCV_regions, all_regions))]
 
 final_fm_res <- list(susie_res_only, singleCVfm_shortlist)
+                           
+#length(final_fm_res[[1]])
+#length(final_fm_res[[2]])
+#x <- readRDS("regions2corrcov_UC_.RDS")
                            
 saveRDS(final_fm_res, paste0("finalFMres_", file, ".RDS"))
